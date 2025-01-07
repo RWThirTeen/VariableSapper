@@ -8,17 +8,48 @@ namespace VariableSapper.Models.FieldElements
 {
     internal class MineField
     {
-        int _rows;
-        int _columns;
+        public int Rows {  get; private set; }
+        public int Columns { get; private set; }
+
+        public int MinesCount
+        {
+            get
+            {
+                if (MinesCount <= 0) return 0;
+                else return MinesCount;
+            }
+            private set => MinesCount = value;
+        }
 
         public Cell[,] Cells;
+
+
+        #region Логика работы со счетчиком мин
+
+        public void SetMinesCount(int minesCount)
+        {
+            MinesCount = minesCount;
+        }
+
+        public void ChangeMinesCount(bool isIncrease)
+        {
+            if (isIncrease) MinesCount++;
+            else MinesCount--;
+        } 
+
+        #endregion
+
+
+
+
+
 
 
 
         public MineField(int rows, int columns)
         {
-            _rows = rows;
-            _columns = columns;
+            Rows = rows;
+            Columns = columns;
         }
     }
 }

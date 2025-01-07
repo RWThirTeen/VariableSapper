@@ -9,6 +9,6 @@ namespace VariableSapper.Interfacees.FieldConstructor
 {
     internal interface IFieldConstructor
     {
-        public Cell[,] CreateField(int rows, int columns);
+        public MineField CreateField(int rows, int columns, int minesCount);
     }
 }

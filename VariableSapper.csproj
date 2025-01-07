@@ -16,7 +16,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-	<LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -70,7 +70,7 @@
     <Compile Include="Interfacees\FieldConstructor\IFieldConstructor.cs" />
     <Compile Include="Interfacees\FieldConstructor\IMinePlacer.cs" />
     <Compile Include="Interfacees\FieldConstructor\INumbersFiller.cs" />
-    <Compile Include="Models\Enums\FieldState.cs" />
+    <Compile Include="Models\Enums\CellState.cs" />
     <Compile Include="Models\Enums\UserMarks.cs" />
     <Compile Include="Models\FieldConstructorElements\FieldConstructor.cs" />
     <Compile Include="Models\FieldConstructorElements\MinePlacer.cs" />

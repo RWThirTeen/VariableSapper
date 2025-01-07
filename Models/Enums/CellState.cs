@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VariableSapper.Models.Enums
 {
-    internal enum FieldState
+    internal enum CellState
     {
         Empty,
         One,
