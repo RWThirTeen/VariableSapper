@@ -39,7 +39,7 @@ namespace VariableSapper.Models.FieldConstructorElements
                 int row = rnd.Next(1, field.Rows);
                 int column = rnd.Next(1, field.Columns);
 
-                if (field.Cells[row, column].IsMine == true) return;
+                if (field.Cells[row, column].IsMine) return;
 
                 field.Cells[row, column].SetAsMine();
             }
