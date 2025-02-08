@@ -16,18 +16,92 @@ namespace VariableSapper.Models.FieldConstructorElements
             {
                 for (int j = 0; j < field.Columns; j++)
                 {
-                    int count = 0;
+                    if (field.Cells[i, j].IsMine)
+                    {
+                        //верхние ячейки
+                        if (i == 0)
+                        {
+                            if (j == 0)
+                            {
+                                field.Cells[i, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j > 0 && j < field.Columns - 1)
+                            {
+                                field.Cells[i, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j == field.Columns - 1)
+                            {
+                                field.Cells[i, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j].IncreaseMinesCountAround();
+                            }
+                        }
 
-                    if (i - 1 > 0 && j - 1 > 0 && field.Cells[i - 1, j - 1].IsMine) count++;
-                    if (i - 1 > 0 && j > 0 && field.Cells[i - 1, j].IsMine) count++;
-                    if (i - 1 > 0 && j + 1 > 0 && field.Cells[i - 1, j + 1].IsMine) count++;
-                    if (i > 0 && j - 1 > 0 && field.Cells[i, j - 1].IsMine) count++;
-                    if (i > 0 && j + 1 > 0 && field.Cells[i, j + 1].IsMine) count++;
-                    if (i + 1 > 0 && j - 1 > 0 && field.Cells[i + 1, j - 1].IsMine) count++;
-                    if (i + 1 > 0 && j > 0 && field.Cells[i + 1, j].IsMine) count++;
-                    if (i + 1 > 0 && j + 1 > 0 && field.Cells[i + 1, j + 1].IsMine) count++;
+                        //боковые слева и справа
+                        else if (i > 0 && i < field.Rows - 1)
+                        {
+                            if (j == 0)
+                            {
+                                field.Cells[i - 1, j].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j == field.Columns - 1)
+                            {
+                                field.Cells[i - 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j].IncreaseMinesCountAround();
+                                field.Cells[i, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i + 1, j].IncreaseMinesCountAround();
+                            }
+                        }
 
-                    field.Cells[i, j].SetMinesCountAround(count);
+                        //нижние ячейки
+                        else if (i == field.Rows - 1)
+                        {
+                            if (j == 0)
+                            {
+                                field.Cells[i - 1, j].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i, j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j > 0 && j < field.Columns - 1)
+                            {
+                                field.Cells[i - 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j + 1].IncreaseMinesCountAround();
+                                field.Cells[i, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i, j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j == field.Columns - 1)
+                            {
+                                field.Cells[i - 1, j - 1].IncreaseMinesCountAround();
+                                field.Cells[i - 1, j].IncreaseMinesCountAround();
+                                field.Cells[i, j - 1].IncreaseMinesCountAround();
+                            }
+                        }
+
+                        //центральные ячейки
+                        else
+                        {
+                            field.Cells[i - 1, j - 1].IncreaseMinesCountAround();
+                            field.Cells[i - 1, j].IncreaseMinesCountAround();
+                            field.Cells[i - 1, j + 1].IncreaseMinesCountAround();
+                            field.Cells[i, j - 1].IncreaseMinesCountAround();
+                            field.Cells[i, j + 1].IncreaseMinesCountAround();
+                            field.Cells[i + 1, j - 1].IncreaseMinesCountAround();
+                            field.Cells[i +1 , j].IncreaseMinesCountAround();
+                            field.Cells[i + 1, j + 1].IncreaseMinesCountAround();
+                        }
+                    }
                 }
             }
         }

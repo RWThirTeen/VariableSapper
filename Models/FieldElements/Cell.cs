@@ -18,7 +18,11 @@ namespace VariableSapper.Models.FieldElements
 
 
         public void SetAsMine() => IsMine = true;
-        public void SetMinesCountAround(int minesCount) => MinesCountAround = minesCount;
+        public void IncreaseMinesCountAround()
+        {
+            if (IsMine) return;
+            MinesCountAround++;
+        }
         
 
         public Cell(int row, int column)
