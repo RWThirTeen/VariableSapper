@@ -13,17 +13,21 @@ namespace VariableSapper.Models.FieldElements
         public int Column { get; private set; }
 
         public bool IsMine { get; private set; }
+        public void SetAsMine() => IsMine = true;
 
         public int MinesCountAround { get; private set; }
-
-
-        public void SetAsMine() => IsMine = true;
         public void IncreaseMinesCountAround()
         {
             if (IsMine) return;
             MinesCountAround++;
         }
-        
+
+        public bool IsOpen { get; private set; }
+        public void SetAsOpen() => IsOpen = true;
+
+        public bool IsFlaged { get; private set; }
+        public void ChangeFlagedStatus() => IsFlaged = !IsFlaged;
+
 
         public Cell(int row, int column)
         {

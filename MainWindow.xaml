@@ -3,10 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:VariableSapper"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:local="clr-namespace:VariableSapper" 
+        xmlns:viewmodels="clr-namespace:VariableSapper.ViewModels" 
+        Title="{Binding WindowTitle}" 
+        Height="{Binding WindowHeight}" 
+        Width="{Binding WindowWidth}">
+    
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
+
+
+    <Grid Width="{Binding CurrentView_Width}"
+          Height="{Binding CurrentView_Height}">
+        <ContentPresenter Content="{Binding CurrentView}"
+                          Width="{Binding CurrentView_Width}"
+                          Height="{Binding CurrentView_Height}">
+            
+        </ContentPresenter>
     </Grid>
+    
 </Window>

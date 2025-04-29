@@ -35,12 +35,9 @@ namespace VariableSapper.Models.FieldElements
         {
             if (isIncrease) MinesCount++;
             else MinesCount--;
-        } 
+        }
 
         #endregion
-
-
-
 
 
 
