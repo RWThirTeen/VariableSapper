@@ -36,7 +36,7 @@ namespace VariableSapper.ViewModels
         }
         void OnStartHardGameCommandExecuted(object p)
         {
-            StartNewGame(16, 30, 99);
+            StartNewGame(16, 30, 100);
         }
         void OnStartCustomGameCommandExecuted(object p)
         {
@@ -56,25 +56,91 @@ namespace VariableSapper.ViewModels
 
         #region CustomGameSetupFields
 
-        int _customRows;
-        int _customColumns;
-        int _customMinesCount;
+        int _customRows = 10;
+        int _customColumns = 10;
+        int _customMinesCount = 10;
 
         public int CustomRows
         {
             get => _customRows;
-            set => Set(ref _customRows, value);
+            set
+            {
+                Set(ref _customRows, value);
+                CalculateMinesCount();
+            }
+                
         }
         public int CustomColumns
         {
             get => _customColumns;
-            set => Set(ref _customColumns, value);
+            set
+            {
+                Set(ref _customColumns, value);
+                CalculateMinesCount();
+            }
+                
         }
         public int CustomMinesCount
         {
             get => _customMinesCount;
             set => Set(ref _customMinesCount, value);
         }
+
+
+        #region SlidersFields
+
+        int _maximumCustomRows;
+        int _maximumCustomCollumns;
+        int _maximumCustomMinesCount;
+        int _minimumRecomendedMinesCount;
+        int _maximunRecomendedMinesCount;
+        int _rowsTick = 10;
+        int _columnsTick = 10;
+        int _minesCountTick = 10;
+
+        public int MaximumCustomRows
+        {
+            get => _maximumCustomRows;
+            set => Set(ref _maximumCustomRows, value);
+        }
+        public int MaximumCustomCollumns
+        {
+            get => _maximumCustomCollumns;
+            set => Set(ref _maximumCustomCollumns, value);
+        }
+        public int MaximumCustomMinesCount
+        {
+            get => _maximumCustomMinesCount;
+            set => Set(ref _maximumCustomMinesCount, value);
+        }
+        public int MinimumCustomRecomendedMinesCount
+        {
+            get => _minimumRecomendedMinesCount;
+            set => Set(ref _minimumRecomendedMinesCount, value);
+        }
+        public int MaximumCustomRecomendedMinesCount
+        {
+            get => _maximunRecomendedMinesCount;
+            set => Set(ref _maximunRecomendedMinesCount, value);
+        }
+        public int RowsTick
+        {
+            get => _rowsTick;
+            set => Set(ref _rowsTick, value);
+        }
+        public int ColumnsTick
+        {
+            get => _columnsTick;
+            set => Set(ref _columnsTick, value);
+        }
+        public int MinesCountTick
+        {
+            get => _minesCountTick;
+            set => Set(ref _minesCountTick, value);
+        }
+
+
+        #endregion
 
         #endregion
 
@@ -89,9 +155,33 @@ namespace VariableSapper.ViewModels
 
         #endregion
 
+        #region HelpingMethods
+
+        void CalculateMaximumSizeOfCustomField()
+        {
+            double monitorHeight = SystemParameters.VirtualScreenHeight;
+            double monitorWidth = SystemParameters.VirtualScreenWidth;
+
+            MaximumCustomRows = (int)Math.Floor(monitorHeight / 250) * 10;
+            MaximumCustomCollumns = (int)Math.Floor(monitorWidth / 250) * 10;
+        }
+
+        void CalculateMinesCount()
+        {
+            int CellsInTotal = CustomColumns * CustomRows;
+
+            MaximumCustomMinesCount = CellsInTotal - 5;
+            MinimumCustomRecomendedMinesCount = (int)Math.Floor(MaximumCustomMinesCount * 0.125 / 10) * 10;
+            MaximumCustomRecomendedMinesCount = (int)Math.Round(MaximumCustomMinesCount * 0.206 / 10) * 10;
+        }
+
+        #endregion
+
         public MainMenuViewModel(MainWindowViewModel windowVM)
         {
             _windowVM = windowVM;
+
+            _windowVM.SetCurrentViewSize(500,550);
 
             ExitApplicationCommand = new LambdaCommand(OnExitApplicationCommandExecuted, CanExitApplicationCommandExecute);
 
@@ -99,6 +189,9 @@ namespace VariableSapper.ViewModels
             StartMediumGameCommand = new LambdaCommand(OnStartMediumGameCommandExecuted, CanStartMediumGameCommandExecute);
             StartHardGameCommand = new LambdaCommand(OnStartHardGameCommandExecuted, CanStartHardGameCommandExecute);
             StartCustomGameCommand = new LambdaCommand(OnStartCustomGameCommandExecuted, CanStartCustomGameCommandExecute);
+
+            CalculateMaximumSizeOfCustomField();
+            CalculateMinesCount();
         }
     }
 }

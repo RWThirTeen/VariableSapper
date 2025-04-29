@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VariableSapper" 
         xmlns:viewmodels="clr-namespace:VariableSapper.ViewModels" 
+        Width="1800" Height="1000" 
         Title="{Binding WindowTitle}" 
-        Height="{Binding WindowHeight}" 
-        Width="{Binding WindowWidth}">
-    
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
-
 
     <Grid Width="{Binding CurrentView_Width}"
           Height="{Binding CurrentView_Height}">

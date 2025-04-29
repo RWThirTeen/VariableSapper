@@ -28,12 +28,12 @@ namespace VariableSapper.ViewModels
         public double WindowWidth
         {
             get => _windowWidth;
-            set => Set(ref _windowWidth, value);
+            private set => Set(ref _windowWidth, value);
         }
         public double WindowHeight
         {
             get => _windowHeight; 
-            set => Set(ref _windowHeight, value);
+            private set => Set(ref _windowHeight, value);
         }
 
         #endregion
@@ -58,14 +58,14 @@ namespace VariableSapper.ViewModels
         public double CurrentView_Width
         {
             get => _currentView_Width;
-            set => Set(ref _currentView_Width, value);
+            private set => Set(ref _currentView_Width, value);
         }
 
         private double _currentView_Height = 250;
         public double CurrentView_Height
         {
             get => _currentView_Height;
-            set => Set(ref _currentView_Height, value);
+            private set => Set(ref _currentView_Height, value);
         } 
 
         public void SetCurrentViewSize(double width, double height)
