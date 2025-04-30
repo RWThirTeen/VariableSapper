@@ -109,6 +109,10 @@ namespace VariableSapper.ViewModels
                     _viewsDictionary.Add(name, new MainMenu());
                     _viewModelsDictionary.Add(name, new MainMenuViewModel(this));
                     break;
+                case "field":
+                    _viewsDictionary.Add(name, new FieldView());
+                    _viewModelsDictionary.Add(name, new FieldViewModel(this));
+                    break;
             }
         }
 

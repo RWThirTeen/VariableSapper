@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using VariableSapper.Infrastructure.Commands;
+using VariableSapper.Interfacees.FieldConstructor;
+using VariableSapper.Models.FieldConstructorElements;
+using VariableSapper.Models.FieldElements;
 using VariableSapper.ViewModels.Base;
 
 namespace VariableSapper.ViewModels
@@ -16,6 +19,10 @@ namespace VariableSapper.ViewModels
 
         void StartNewGame(int row, int column, int mines)
         {
+            IFieldConstructor constructor = new FieldConstructor();
+
+            MineField field = constructor.CreateField(row, column, mines);
+
 
         }
 
@@ -159,8 +166,8 @@ namespace VariableSapper.ViewModels
 
         void CalculateMaximumSizeOfCustomField()
         {
-            double monitorHeight = SystemParameters.VirtualScreenHeight;
-            double monitorWidth = SystemParameters.VirtualScreenWidth;
+            double monitorWidth = SystemParameters.FullPrimaryScreenWidth;
+            double monitorHeight = SystemParameters.FullPrimaryScreenHeight;
 
             MaximumCustomRows = (int)Math.Floor(monitorHeight / 250) * 10;
             MaximumCustomCollumns = (int)Math.Floor(monitorWidth / 250) * 10;
@@ -172,7 +179,7 @@ namespace VariableSapper.ViewModels
 
             MaximumCustomMinesCount = CellsInTotal - 5;
             MinimumCustomRecomendedMinesCount = (int)Math.Floor(MaximumCustomMinesCount * 0.125 / 10) * 10;
-            MaximumCustomRecomendedMinesCount = (int)Math.Round(MaximumCustomMinesCount * 0.206 / 10) * 10;
+            MaximumCustomRecomendedMinesCount = (int)Math.Ceiling(MaximumCustomMinesCount * 0.206 / 10) * 10;
         }
 
         #endregion
