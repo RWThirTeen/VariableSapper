@@ -4,25 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VariableSapper" 
-        xmlns:viewmodels="clr-namespace:VariableSapper.ViewModels" 
-        Width="1800" Height="1000" 
+        xmlns:viewmodels="clr-namespace:VariableSapper.ViewModels"
+        xmlns:views="clr-namespace:VariableSapper.Views"
         Title="{Binding WindowTitle}" 
         ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight"
+        MinHeight="400" MinWidth="500">
 
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
 
-    <Grid Width="{Binding CurrentView_Width}"
-          Height="{Binding CurrentView_Height}">
-        <ContentPresenter Content="{Binding CurrentView}"
-                          Width="{Binding CurrentView_Width}"
-                          Height="{Binding CurrentView_Height}"
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:MainMenuViewModel}">
+            <views:MainMenu/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodels:FieldViewModel}">
+            <views:FieldView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <!--<Canvas>
+            <ContentPresenter Content="{Binding CurrentView}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
-            
-        </ContentPresenter>
+
+            </ContentPresenter>
+        </Canvas>-->
+
+        <ContentControl Content="{Binding CurrentViewModel}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Width="{Binding CurrentView_Width}"
+                          Height="{Binding CurrentView_Height}">
+        </ContentControl>
+
     </Grid>
     
 </Window>

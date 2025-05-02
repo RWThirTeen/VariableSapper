@@ -22,19 +22,19 @@ namespace VariableSapper.ViewModels
             set => Set(ref  _windowTitle, value);
         }
 
-        double _windowWidth = 250;
-        double _windowHeight = 250;
+        //double _windowWidth = 250;
+        //double _windowHeight = 250;
 
-        public double WindowWidth
-        {
-            get => _windowWidth;
-            private set => Set(ref _windowWidth, value);
-        }
-        public double WindowHeight
-        {
-            get => _windowHeight; 
-            private set => Set(ref _windowHeight, value);
-        }
+        //public double WindowWidth
+        //{
+        //    get => _windowWidth;
+        //    private set => Set(ref _windowWidth, value);
+        //}
+        //public double WindowHeight
+        //{
+        //    get => _windowHeight; 
+        //    private set => Set(ref _windowHeight, value);
+        //}
 
         #endregion
 
@@ -45,11 +45,18 @@ namespace VariableSapper.ViewModels
 
         #region CurrentView
 
-        private FrameworkElement _currentView;
-        public FrameworkElement CurrentView
+        //private FrameworkElement _currentView;
+        //public FrameworkElement CurrentView
+        //{
+        //    get => _currentView;
+        //    set => Set(ref _currentView, value);
+        //}
+
+        private ViewModel _currentViewModel;
+        public ViewModel CurrentViewModel
         {
-            get => _currentView;
-            set => Set(ref _currentView, value);
+            get => _currentViewModel;
+            set => Set(ref _currentViewModel, value);
         }
 
         #region CurrentView_Size
@@ -75,8 +82,8 @@ namespace VariableSapper.ViewModels
             CurrentView_Width = width;
             CurrentView_Height = height;
 
-            WindowWidth = width + 30;
-            WindowHeight = height + 30;
+            //WindowWidth = CurrentView_Width + 30;
+            //WindowHeight = CurrentView_Height + 30;
         }
 
         #endregion
@@ -88,13 +95,19 @@ namespace VariableSapper.ViewModels
         {
             if (name == null || name == "") return; // прописать вывод ошибки
 
-            if (!_viewsDictionary.ContainsKey(name))
+            //if (!_viewsDictionary.ContainsKey(name))
+            //{
+            //    CreateNewView(name);
+            //}
+
+            if (!_viewModelsDictionary.ContainsKey(name))
             {
                 CreateNewView(name);
             }
 
-            CurrentView = _viewsDictionary[name];
-            CurrentView.DataContext = _viewModelsDictionary[name];
+            //CurrentView = _viewsDictionary[name];
+            //CurrentView.DataContext = _viewModelsDictionary[name];
+            CurrentViewModel = _viewModelsDictionary[name];
 
             OnPropertyChanged("CurrentView");
         }
@@ -106,11 +119,11 @@ namespace VariableSapper.ViewModels
                 default: break;
 
                 case "menu":
-                    _viewsDictionary.Add(name, new MainMenu());
+                    //_viewsDictionary.Add(name, new MainMenu());
                     _viewModelsDictionary.Add(name, new MainMenuViewModel(this));
                     break;
                 case "field":
-                    _viewsDictionary.Add(name, new FieldView());
+                    //_viewsDictionary.Add(name, new FieldView());
                     _viewModelsDictionary.Add(name, new FieldViewModel(this));
                     break;
             }

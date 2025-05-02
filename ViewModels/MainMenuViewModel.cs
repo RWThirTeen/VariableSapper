@@ -24,7 +24,7 @@ namespace VariableSapper.ViewModels
 
             _windowVM.ChangeCurrentView("field");
 
-            FieldViewModel VM = _windowVM.CurrentView.DataContext as FieldViewModel;
+            FieldViewModel VM = _windowVM.CurrentViewModel as FieldViewModel;
             VM.MineField = field;
         }
 
@@ -49,7 +49,7 @@ namespace VariableSapper.ViewModels
         }
         void OnStartCustomGameCommandExecuted(object p)
         {
-            StartNewGame(CustomRows,CustomColumns,CustomMinesCount);
+            StartNewGame(CustomRows, CustomColumns, CustomMinesCount);
         }
 
         bool CanStartEasyGameCommandExecute(object p) => true;
@@ -77,7 +77,7 @@ namespace VariableSapper.ViewModels
                 Set(ref _customRows, value);
                 CalculateMinesCount();
             }
-                
+
         }
         public int CustomColumns
         {
@@ -87,7 +87,7 @@ namespace VariableSapper.ViewModels
                 Set(ref _customColumns, value);
                 CalculateMinesCount();
             }
-                
+
         }
         public int CustomMinesCount
         {

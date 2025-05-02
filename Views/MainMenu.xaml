@@ -81,9 +81,10 @@
             <Slider IsSelectionRangeEnabled="True"
                     Minimum="10" Maximum="{Binding MaximumCustomRows}"
                     TickFrequency="{Binding RowsTick}"
-                    TickPlacement="TopLeft"
-                    Value="{Binding CustomRows}"/>
-            
+                    TickPlacement="BottomRight"
+                    Value="{Binding CustomRows}">
+            </Slider>
+
             <DockPanel Margin="5">
                 <TextBlock Text="Колонок"
                            DockPanel.Dock="Left"/>

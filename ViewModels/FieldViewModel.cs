@@ -19,7 +19,7 @@ namespace VariableSapper.ViewModels
             set
             {
                 Set(ref _mineField, value);
-                _mainWindow.SetCurrentViewSize(MineField.Columns * 25 + 20, MineField.Rows * 25 + 60);
+                _mainWindow.SetCurrentViewSize(MineField.Columns * 50 + 20, MineField.Rows * 50 + 60);
             }
         }
 
