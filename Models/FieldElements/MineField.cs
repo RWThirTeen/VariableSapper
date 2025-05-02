@@ -48,7 +48,16 @@ namespace VariableSapper.Models.FieldElements
         {
             Rows = rows;
             Columns = columns;
+
             Cells = new Cell[Rows, Columns];
+
+            for (int row = 0; row < Rows; row++)
+            {
+                for (int column = 0; column < Columns; column++)
+                {
+                    Cells[row, column] = new Cell(row, column);
+                }
+            }
         }
     }
 }

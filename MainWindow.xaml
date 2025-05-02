@@ -18,7 +18,9 @@
           Height="{Binding CurrentView_Height}">
         <ContentPresenter Content="{Binding CurrentView}"
                           Width="{Binding CurrentView_Width}"
-                          Height="{Binding CurrentView_Height}">
+                          Height="{Binding CurrentView_Height}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
             
         </ContentPresenter>
     </Grid>
