@@ -11,14 +11,15 @@ namespace VariableSapper.Models.FieldElements
         public int Rows {  get; private set; }
         public int Columns { get; private set; }
 
+        int _minesCount;
         public int MinesCount
         {
             get
             {
-                if (MinesCount <= 0) return 0;
-                else return MinesCount;
+                if (_minesCount <= 0) return 0;
+                else return _minesCount;
             }
-            private set => MinesCount = value;
+            private set => _minesCount = value;
         }
 
         public Cell[,] Cells;
@@ -47,6 +48,7 @@ namespace VariableSapper.Models.FieldElements
         {
             Rows = rows;
             Columns = columns;
+            Cells = new Cell[Rows, Columns];
         }
     }
 }

@@ -12,7 +12,16 @@ namespace VariableSapper.ViewModels
     {
         readonly MainWindowViewModel _mainWindow;
 
-        public MineField MineField;
+        MineField _mineField;
+        public MineField MineField
+        {
+            get => _mineField;
+            set
+            {
+                Set(ref _mineField, value);
+                _mainWindow.SetCurrentViewSize(MineField.Columns * 25 + 20, MineField.Rows * 25 + 60);
+            }
+        }
 
         public int MineCount => MineField.MinesCount;
         
@@ -27,6 +36,8 @@ namespace VariableSapper.ViewModels
         }
 
         #endregion
+
+
 
 
         public FieldViewModel(MainWindowViewModel mainWindowViewModel)

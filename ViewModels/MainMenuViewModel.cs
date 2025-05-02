@@ -20,10 +20,12 @@ namespace VariableSapper.ViewModels
         void StartNewGame(int row, int column, int mines)
         {
             IFieldConstructor constructor = new FieldConstructor();
-
             MineField field = constructor.CreateField(row, column, mines);
 
+            _windowVM.ChangeCurrentView("field");
 
+            FieldViewModel VM = _windowVM.CurrentView.DataContext as FieldViewModel;
+            VM.MineField = field;
         }
 
         #region StartGameButtons
