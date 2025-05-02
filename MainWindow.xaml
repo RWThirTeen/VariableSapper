@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         SizeToContent="WidthAndHeight"
-        MinHeight="400" MinWidth="500">
+        MinHeight="550" MinWidth="500">
 
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>

@@ -11,6 +11,14 @@ namespace VariableSapper.Models.FieldElements
         public int Rows {  get; private set; }
         public int Columns { get; private set; }
 
+
+         int _startMinesCount;
+        public int StartMinesCount
+        {
+            get => _startMinesCount;
+            private set => _startMinesCount = value;
+        }
+
         int _minesCount;
         public int MinesCount
         {
@@ -30,6 +38,7 @@ namespace VariableSapper.Models.FieldElements
         public void SetMinesCount(int minesCount)
         {
             MinesCount = minesCount;
+            StartMinesCount = minesCount;
         }
 
         public void ChangeMinesCount(bool isIncrease)

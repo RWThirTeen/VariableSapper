@@ -29,15 +29,19 @@
                         Orientation="Horizontal"
                         VerticalAlignment="Center">
                 <TextBlock Text="Таймер:"/>
-                <TextBlock Text="Таймер"/>
+                <TextBlock Text="{Binding Timer}"/>
                 <TextBlock Text="Мин:"/>
-                <TextBlock Text="Таймер"/>
+                <TextBlock Text="{Binding MineCount}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Content="В меню"/>
-                <Button Content="Выход"/>
+                <Button Content="Заново"
+                        Command="{Binding RestartGameCommand}"/>
+                <Button Content="В меню"
+                        Command="{Binding BackToMenuCommand}"/>
+                <Button Content="Выход"
+                        Command="{Binding ApplicationExitCommand}"/>
             </StackPanel>
         </DockPanel>
             

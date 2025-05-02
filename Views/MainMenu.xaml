@@ -47,7 +47,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            <Button Command="{Binding StartEasyGameCommand}">
+            <Button Command="{Binding StartHardGameCommand}">
                 <Button.Content>
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="Тяжёлое поле"

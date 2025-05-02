@@ -171,8 +171,8 @@ namespace VariableSapper.ViewModels
             double monitorWidth = SystemParameters.FullPrimaryScreenWidth;
             double monitorHeight = SystemParameters.FullPrimaryScreenHeight;
 
-            MaximumCustomRows = (int)Math.Floor(monitorHeight / 250) * 10;
-            MaximumCustomCollumns = (int)Math.Floor(monitorWidth / 250) * 10;
+            MaximumCustomRows = (int)Math.Floor(monitorHeight / 300) * 10;
+            MaximumCustomCollumns = (int)Math.Floor(monitorWidth / 300) * 10;
         }
 
         void CalculateMinesCount()
