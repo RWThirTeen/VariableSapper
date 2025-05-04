@@ -25,12 +25,43 @@ namespace VariableSapper.ViewModels
             set
             {
                 Set(ref _mineField, value);
-                _mainWindow.SetCurrentViewSize(MineField.Columns * 30 + 20, MineField.Rows * 30 + 60);
+
+                int calculatedwidth = MineField.Columns * 30 + 20;
+                int calculatedheight = MineField.Rows * 30 + 20;
+
+                _mainWindow.SetCurrentViewSize(Math.Max(calculatedwidth,550), calculatedheight + 40);
+                UserControlWidth = calculatedwidth;
+                UserControlHeight = calculatedheight;
             }
         }
 
         public int MineCount => MineField.MinesCount;
-        
+
+
+        #region UserControlSize
+
+        double _userControlWidth;
+        double _userControlHeight;
+
+        public double UserControlWidth
+        {
+            get => _userControlWidth;
+            private set
+            {
+                if (value < 550) value = 550;
+                Set(ref _userControlWidth, value);
+            }
+                
+        }
+        public double UserControlHeight
+        {
+            get => _userControlHeight;
+            private set => Set(ref _userControlHeight, value);
+        }
+
+        #endregion
+
+
 
         #region Timer
 
