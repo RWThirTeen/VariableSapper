@@ -74,9 +74,10 @@
     <Compile Include="Models\Enums\UserMarks.cs" />
     <Compile Include="Models\FieldConstructorElements\FieldConstructor.cs" />
     <Compile Include="Models\FieldConstructorElements\MinePlacer.cs" />
-    <Compile Include="Models\FieldElements\NumbersFiller.cs" />
+    <Compile Include="Models\FieldConstructorElements\NumbersFiller.cs" />
     <Compile Include="Models\FieldElements\Cell.cs" />
     <Compile Include="Models\FieldElements\MineField.cs" />
+    <Compile Include="Models\FieldElements\Row.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />

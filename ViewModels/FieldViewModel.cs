@@ -26,8 +26,8 @@ namespace VariableSapper.ViewModels
             {
                 Set(ref _mineField, value);
 
-                int calculatedwidth = MineField.Columns * 30 + 20;
-                int calculatedheight = MineField.Rows * 30 + 20;
+                int calculatedwidth = MineField.NumberOfColumns * 30 + 20;
+                int calculatedheight = MineField.NumberOfRows * 30 + 20;
 
                 _mainWindow.SetCurrentViewSize(Math.Max(calculatedwidth,550), calculatedheight + 40);
                 UserControlWidth = calculatedwidth;
@@ -36,6 +36,8 @@ namespace VariableSapper.ViewModels
         }
 
         public int MineCount => MineField.MinesCount;
+
+        
 
 
         #region UserControlSize
@@ -96,7 +98,7 @@ namespace VariableSapper.ViewModels
         void OnRestartGameCommandExecuted(object p)
         {
             IFieldConstructor constructor = new FieldConstructor();
-            MineField field = constructor.CreateField(MineField.Rows, MineField.Columns, MineField.StartMinesCount);
+            MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount);
             Timer = 0;
 
             // нужно ли обновление вида?

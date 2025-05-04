@@ -115,7 +115,7 @@
             <Separator Margin="0,12"
                        Style="{StaticResource MaterialDesignDarkSeparator}"/>
             <Button Content="Выход"
-                    />
+                    Command="{Binding ExitApplicationCommand}" Cursor="Hand"/>
         </StackPanel>
 
     </Grid>

@@ -34,6 +34,7 @@ namespace VariableSapper.Models.FieldElements
             Row = row;
             Column = column;
             IsMine = false;
+            IsOpen = false;
         }
     }
 }

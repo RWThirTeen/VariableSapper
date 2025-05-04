@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using VariableSapper.Infrastructure.Commands;
 
 namespace VariableSapper.Models.FieldElements
 {
     internal class MineField
     {
-        public int Rows {  get; private set; }
-        public int Columns { get; private set; }
+        public int NumberOfRows {  get; private set; }
+        public int NumberOfColumns { get; private set; }
 
 
          int _startMinesCount;
@@ -30,8 +34,15 @@ namespace VariableSapper.Models.FieldElements
             private set => _minesCount = value;
         }
 
-        public Cell[,] Cells;
 
+        //Cell[,] _cells;
+        //public Cell[,] Cells
+        //{
+        //    get => _cells;
+        //    set => _cells = value;
+        //}
+
+        public ObservableCollection<Row> Rows { get; private set; }
 
         #region Логика работы со счетчиком мин
 
@@ -50,23 +61,63 @@ namespace VariableSapper.Models.FieldElements
         #endregion
 
 
+        #region Логика нажатия на ячйеки
+
+        public ICommand OpenCellCommand { get; }
+        void OnOpenCellCommandExecuted(object p)
+        {
+            Text = Convert.ToString(p);
+        }
+        bool CanOpenCellCommandExecute(object p) => true;
+
+        public ICommand SetFlagCommand { get; }
+        void OnSetFlagCommandExecuted(object p)
+        {
+            
+        }
+        bool CanSetFlagCommandExecute(object p) => true;
+
+        #endregion
+
+
+
+        #region Временное поле
+        /// <summary>
+        /// 
+        /// </summary>
+        string _text;
+        public string Text { get; set; }
+
+
+        #endregion
 
 
 
         public MineField(int rows, int columns)
         {
-            Rows = rows;
-            Columns = columns;
+            NumberOfRows = rows;
+            NumberOfColumns = columns;
 
-            Cells = new Cell[Rows, Columns];
+            Rows = new ObservableCollection<Row>();
 
-            for (int row = 0; row < Rows; row++)
+            for (int i = 0; i < NumberOfRows; i++)
             {
-                for (int column = 0; column < Columns; column++)
-                {
-                    Cells[row, column] = new Cell(row, column);
-                }
+                Rows.Add(new Row(i, NumberOfColumns));
             }
+
+            //Cells = new Cell[Rows, Columns];
+
+            //for (int row = 0; row < Rows; row++)
+            //{
+            //    for (int column = 0; column < Columns; column++)
+            //    {
+            //        Cells[row, column] = new Cell(row, column);
+            //    }
+            //}
+
+
+            OpenCellCommand = new LambdaCommand(OnOpenCellCommandExecuted, CanOpenCellCommandExecute);
+            SetFlagCommand = new LambdaCommand(OnSetFlagCommandExecuted, CanSetFlagCommandExecute);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace VariableSapper.Models.FieldConstructorElements
 
             while (countMinesToSet > 0)
             {
-                SetMineInCell();
+                if(SetMineInCell()) countMinesToSet--;
             }
 
             
@@ -34,14 +34,23 @@ namespace VariableSapper.Models.FieldConstructorElements
 
 
 
-            void SetMineInCell()
+            bool SetMineInCell()
             {
-                int row = rnd.Next(1, field.Rows);
-                int column = rnd.Next(1, field.Columns);
+                int row = rnd.Next(0, field.NumberOfRows);
+                int column = rnd.Next(field.NumberOfColumns);
 
-                if (field.Cells[row, column].IsMine) return;
+                if (field.Rows[row].Cells[column].IsMine) return false;
 
-                field.Cells[row, column].SetAsMine();
+                field.Rows[row].Cells[column].SetAsMine();
+
+                return true;
+
+                //int row = rnd.Next(1, field.Rows);
+                //int column = rnd.Next(1, field.Columns);
+
+                //if (field.Cells[row, column].IsMine) return;
+
+                //field.Cells[row, column].SetAsMine();
             }
         }
     }
