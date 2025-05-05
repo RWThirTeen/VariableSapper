@@ -61,35 +61,6 @@ namespace VariableSapper.Models.FieldElements
         #endregion
 
 
-        #region Логика нажатия на ячйеки
-
-        public ICommand OpenCellCommand { get; }
-        void OnOpenCellCommandExecuted(object p)
-        {
-            Text = Convert.ToString(p);
-        }
-        bool CanOpenCellCommandExecute(object p) => true;
-
-        public ICommand SetFlagCommand { get; }
-        void OnSetFlagCommandExecuted(object p)
-        {
-            
-        }
-        bool CanSetFlagCommandExecute(object p) => true;
-
-        #endregion
-
-
-
-        #region Временное поле
-        /// <summary>
-        /// 
-        /// </summary>
-        string _text;
-        public string Text { get; set; }
-
-
-        #endregion
 
 
 
@@ -116,8 +87,7 @@ namespace VariableSapper.Models.FieldElements
             //}
 
 
-            OpenCellCommand = new LambdaCommand(OnOpenCellCommandExecuted, CanOpenCellCommandExecute);
-            SetFlagCommand = new LambdaCommand(OnSetFlagCommandExecuted, CanSetFlagCommandExecute);
+            
         }
     }
 }

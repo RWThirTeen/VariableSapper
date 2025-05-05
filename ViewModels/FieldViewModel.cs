@@ -11,6 +11,7 @@ using VariableSapper.Interfacees.FieldConstructor;
 using VariableSapper.Models.FieldConstructorElements;
 using VariableSapper.Models.FieldElements;
 using VariableSapper.ViewModels.Base;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VariableSapper.ViewModels
 {
@@ -107,6 +108,37 @@ namespace VariableSapper.ViewModels
 
         #endregion
 
+        #region Логика нажатия на ячйеки
+
+        public ICommand OpenCellCommand { get; }
+        void OnOpenCellCommandExecuted(object p)
+        {
+            Text = Convert.ToString(p);
+        }
+        bool CanOpenCellCommandExecute(object p) => true;
+
+        public ICommand SetFlagCommand { get; }
+        void OnSetFlagCommandExecuted(object p)
+        {
+
+        }
+        bool CanSetFlagCommandExecute(object p) => true;
+
+        #endregion
+
+
+
+
+        string _text = "8";
+        public string Text
+        {
+            get => _text;
+            set => Set(ref  _text, value);
+        }
+
+
+
+
         public FieldViewModel(MainWindowViewModel mainWindowViewModel)
         {
             _mainWindow = mainWindowViewModel;
@@ -114,6 +146,9 @@ namespace VariableSapper.ViewModels
             ApplicationExitCommand = new LambdaCommand(OnApplicationExitCommandExecuted, CanApplicationExitCommandExecute);
             BackToMenuCommand = new LambdaCommand(OnBackToMenuCommandExecuted, CanBackToMenuCommandExecute);
             RestartGameCommand = new LambdaCommand(OnRestartGameCommandExecuted, CanRestartGameCommandExecute);
+
+            OpenCellCommand = new LambdaCommand(OnOpenCellCommandExecuted, CanOpenCellCommandExecute);
+            SetFlagCommand = new LambdaCommand(OnSetFlagCommandExecuted, CanSetFlagCommandExecute);
         }
     }
 }

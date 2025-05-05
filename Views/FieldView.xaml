@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:VariableSapper.Views"
              mc:Ignorable="d" 
              Height="{Binding UserControlHeight}" Width="{Binding UserControlWidth}">
@@ -21,6 +22,7 @@
             </Style>
             <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
                 <Setter Property="Margin" Value="10,0"/>
+                <Setter Property="Padding" Value="4"/>
             </Style>
         </Grid.Resources>
 
@@ -28,20 +30,34 @@
             <StackPanel DockPanel.Dock="Left"
                         Orientation="Horizontal"
                         VerticalAlignment="Center">
-                <TextBlock Text="Таймер:"/>
-                <TextBlock Text="{Binding MineField.Text}"/>
-                <TextBlock Text="Мин:"/>
-                <TextBlock Text="{Binding MineCount}"/>
+                <md:PackIcon Kind="Timer" 
+                             Width="25" Height="25"
+                             VerticalAlignment="Center"
+                             Margin="5"/>
+                <TextBlock Text="{Binding Text}"
+                           Width="60"/>
+                <md:PackIcon Kind="Mine" 
+                             Width="25" Height="25"
+                             VerticalAlignment="Center"
+                             Margin="5"/>   
+                <TextBlock Text="{Binding MineCount}"
+                           Width="60"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Content="Заново"
-                        Command="{Binding RestartGameCommand}"/>
-                <Button Content="В меню"
-                        Command="{Binding BackToMenuCommand}"/>
-                <Button Content="Выход"
-                        Command="{Binding ApplicationExitCommand}"/>
+                <Button Command="{Binding RestartGameCommand}">
+                    <md:PackIcon Kind="Restart"
+                                 Width="25" Height="25"/>
+                </Button>
+                <Button Command="{Binding BackToMenuCommand}">
+                    <md:PackIcon Kind="MenuOpen"
+                                 Width="25" Height="25"/>
+                </Button>
+                <Button Command="{Binding ApplicationExitCommand}">
+                    <md:PackIcon Kind="CloseCircleOutline"
+                                 Width="25" Height="25"/>
+                </Button>
             </StackPanel>
         </DockPanel>
 
@@ -67,7 +83,8 @@
                             <DataTemplate>
                                 <Button Style="{StaticResource MaterialDesignRaisedButton}"
                                         Width="30" Height="30"
-                                        Command="{Binding OpenCellCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=ItemsControl}}"/>
+                                        Command="{Binding DataContext.OpenCellCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:FieldView}}}" 
+                                        MouseRightButtonUp="Button_MouseRightButtonUp"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

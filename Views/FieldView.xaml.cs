@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VariableSapper.ViewModels;
+using VariableSapper.ViewModels.Base;
 
 namespace VariableSapper.Views
 {
@@ -23,6 +25,18 @@ namespace VariableSapper.Views
         public FieldView()
         {
             InitializeComponent();
+        }
+
+        FieldViewModel vm => this.DataContext as FieldViewModel;
+
+        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            vm.ApplicationExitCommand.Execute(null);
+        }
+
+        private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            vm.ApplicationExitCommand.Execute(null);
         }
     }
 }
