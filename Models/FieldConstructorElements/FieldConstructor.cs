@@ -17,7 +17,7 @@ namespace VariableSapper.Models.FieldConstructorElements
         {
             if (rows <= 0 || columns <= 0) return null;
 
-            MineField field = new MineField(rows, columns);
+            MineField field = new MineField(rows, columns, minesCount);
 
             _minePlacer.PlaceMines(field);
 

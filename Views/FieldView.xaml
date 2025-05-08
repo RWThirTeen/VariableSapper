@@ -34,7 +34,7 @@
                              Width="25" Height="25"
                              VerticalAlignment="Center"
                              Margin="5"/>
-                <TextBlock Text="{Binding Text}"
+                <TextBlock Text="{Binding Timer}"
                            Width="60"/>
                 <md:PackIcon Kind="Mine" 
                              Width="25" Height="25"
@@ -62,7 +62,9 @@
         </DockPanel>
 
         <ItemsControl ItemsSource="{Binding MineField.Rows}"
-                      Grid.Row="1">
+                      Grid.Row="1"
+                      HorizontalAlignment="Center"
+                      HorizontalContentAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="{Binding MineField.NumberOfRows}"/>
@@ -75,16 +77,26 @@
                                   Margin="0,5">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding Cells.Count}"/>
+                                <UniformGrid Columns="{Binding Cells.Count}"
+                                             Height="25" 
+                                             VerticalAlignment="Center"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Style="{StaticResource MaterialDesignRaisedButton}"
-                                        Width="30" Height="30"
-                                        Command="{Binding DataContext.OpenCellCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:FieldView}}}" 
-                                        MouseRightButtonUp="Button_MouseRightButtonUp"/>
+                                <Button Width="30" Height="30"
+                                        Padding="0" Margin="0" 
+                                        MouseRightButtonUp="Button_MouseRightButtonUp"
+                                        MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                        BorderThickness="0">
+                                    <md:PackIcon Kind="{Binding IconName}"
+                                                 Margin="-5" 
+                                                 Height="25" Width="25"/>
+                                </Button>
+                                
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

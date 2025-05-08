@@ -4,6 +4,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using VariableSapper.Infrastructure.Commands;
@@ -68,8 +69,8 @@ namespace VariableSapper.ViewModels
 
         #region Timer
 
-        int _timer;
-        public int Timer
+        string _timer;
+        public string Timer
         {
             get => _timer;
             set => Set(ref _timer, value);
@@ -100,7 +101,7 @@ namespace VariableSapper.ViewModels
         {
             IFieldConstructor constructor = new FieldConstructor();
             MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount);
-            Timer = 0;
+            Timer = "0";
 
             // нужно ли обновление вида?
         }
@@ -113,14 +114,25 @@ namespace VariableSapper.ViewModels
         public ICommand OpenCellCommand { get; }
         void OnOpenCellCommandExecuted(object p)
         {
-            Text = Convert.ToString(p);
+            Button button = (Button)p;
+            Cell cell = button.DataContext as Cell;
+
+            cell.SetAsOpen();
         }
         bool CanOpenCellCommandExecute(object p) => true;
 
         public ICommand SetFlagCommand { get; }
         void OnSetFlagCommandExecuted(object p)
         {
+            Button button = (Button)p;
+            Cell cell = button.DataContext as Cell;
 
+            if (cell.IsOpen) return;
+
+            MineField.ChangeMinesCount(cell.IsFlaged);
+
+            cell.ChangeFlagedStatus();
+            OnPropertyChanged(cell.IconName);
         }
         bool CanSetFlagCommandExecute(object p) => true;
 

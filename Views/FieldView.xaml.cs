@@ -31,12 +31,13 @@ namespace VariableSapper.Views
 
         private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            vm.ApplicationExitCommand.Execute(null);
+
+            vm.OpenCellCommand.Execute(sender);
         }
 
         private void Button_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            vm.ApplicationExitCommand.Execute(null);
+            vm.SetFlagCommand.Execute(sender);
         }
     }
 }

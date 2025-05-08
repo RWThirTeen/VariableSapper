@@ -35,12 +35,6 @@ namespace VariableSapper.Models.FieldElements
         }
 
 
-        //Cell[,] _cells;
-        //public Cell[,] Cells
-        //{
-        //    get => _cells;
-        //    set => _cells = value;
-        //}
 
         public ObservableCollection<Row> Rows { get; private set; }
 
@@ -64,10 +58,12 @@ namespace VariableSapper.Models.FieldElements
 
 
 
-        public MineField(int rows, int columns)
+        public MineField(int rows, int columns, int minesCount)
         {
             NumberOfRows = rows;
             NumberOfColumns = columns;
+            StartMinesCount = minesCount;
+            MinesCount = minesCount;
 
             Rows = new ObservableCollection<Row>();
 
@@ -75,19 +71,6 @@ namespace VariableSapper.Models.FieldElements
             {
                 Rows.Add(new Row(i, NumberOfColumns));
             }
-
-            //Cells = new Cell[Rows, Columns];
-
-            //for (int row = 0; row < Rows; row++)
-            //{
-            //    for (int column = 0; column < Columns; column++)
-            //    {
-            //        Cells[row, column] = new Cell(row, column);
-            //    }
-            //}
-
-
-            
         }
     }
 }
