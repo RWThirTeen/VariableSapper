@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using VariableSapper.Models.Enums;
@@ -9,6 +10,8 @@ namespace VariableSapper.Models.FieldElements
 {
     internal class Cell
     {
+        readonly MineField _field;
+
         public int Row { get; private set; }
         public int Column { get; private set; }
 
@@ -59,6 +62,7 @@ namespace VariableSapper.Models.FieldElements
                     IconName = "Flag";
                     _isFlaged = value;
                 }
+                
             }
         }
         public void ChangeFlagedStatus() => IsFlaged = !IsFlaged;
@@ -70,7 +74,7 @@ namespace VariableSapper.Models.FieldElements
             private set => _iconName = value;
         }
 
-        public Cell(int row, int column)
+        public Cell(int row, int column, MineField field)
         {
             Row = row;
             Column = column;

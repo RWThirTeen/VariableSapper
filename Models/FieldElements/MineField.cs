@@ -69,7 +69,7 @@ namespace VariableSapper.Models.FieldElements
 
             for (int i = 0; i < NumberOfRows; i++)
             {
-                Rows.Add(new Row(i, NumberOfColumns));
+                Rows.Add(new Row(i, NumberOfColumns, this));
             }
         }
     }

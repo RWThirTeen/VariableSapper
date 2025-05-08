@@ -13,14 +13,14 @@ namespace VariableSapper.Models.FieldElements
 
         public ObservableCollection<Cell> Cells { get; private set; }
 
-        public Row(int rowNumber, int columnCount)
+        public Row(int rowNumber, int columnCount, MineField field)
         {
             RowNumber = rowNumber;
             Cells = new ObservableCollection<Cell>();
 
             for (int i = 0; i < columnCount - 1; i++)
             {
-                Cells.Add(new Cell(RowNumber, i));
+                Cells.Add(new Cell(RowNumber, i, field));
             }
         }
     }

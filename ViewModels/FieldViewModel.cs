@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -34,12 +36,16 @@ namespace VariableSapper.ViewModels
                 _mainWindow.SetCurrentViewSize(Math.Max(calculatedwidth,550), calculatedheight + 40);
                 UserControlWidth = calculatedwidth;
                 UserControlHeight = calculatedheight;
+
+                Watch = new Stopwatch();
+                Watch.Start();
+                StartTimer();
             }
         }
 
         public int MineCount => MineField.MinesCount;
 
-        
+        public string CellIconPath;
 
 
         #region UserControlSize
@@ -76,6 +82,46 @@ namespace VariableSapper.ViewModels
             set => Set(ref _timer, value);
         }
 
+        Stopwatch Watch { get; set; }
+
+        private CancellationTokenSource _cancellationtoken;
+
+        private async Task RunLoopAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                while (true)
+                {
+                    Timer = Convert.ToString(Math.Round(Watch.Elapsed.TotalSeconds));
+                    await Task.Delay(1000, cancellationToken);
+                }
+            }
+            catch (OperationCanceledException) { }
+        }
+
+        private async void StartTimer()
+        {
+            if (_cancellationtoken != null) return;
+
+            try
+            {
+                using (_cancellationtoken = new CancellationTokenSource())
+                {
+                    await RunLoopAsync(_cancellationtoken.Token);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            _cancellationtoken = null;
+        }
+
+        void StopTimer()
+        {
+            _cancellationtoken?.Cancel();
+        }
+
         #endregion
 
 
@@ -100,8 +146,7 @@ namespace VariableSapper.ViewModels
         void OnRestartGameCommandExecuted(object p)
         {
             IFieldConstructor constructor = new FieldConstructor();
-            MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount);
-            Timer = "0";
+            MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount); 
 
             // нужно ли обновление вида?
         }
@@ -132,21 +177,14 @@ namespace VariableSapper.ViewModels
             MineField.ChangeMinesCount(cell.IsFlaged);
 
             cell.ChangeFlagedStatus();
-            OnPropertyChanged(cell.IconName);
+
+            OnPropertyChanged(nameof(Cell.IconName));
+            
+            OnPropertyChanged("MineCount");
         }
         bool CanSetFlagCommandExecute(object p) => true;
 
         #endregion
-
-
-
-
-        string _text = "8";
-        public string Text
-        {
-            get => _text;
-            set => Set(ref  _text, value);
-        }
 
 
 
