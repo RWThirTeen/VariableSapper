@@ -15,7 +15,7 @@ namespace VariableSapper.Models.FieldConstructorElements
     {
         public void PlaceMines(MineField field)
         {
-            if (field != null) return; //сделать сообщение об ошибке
+            if (field == null) return; //сделать сообщение об ошибке
 
             int countMinesToSet = field.MinesCount;
 
@@ -39,9 +39,9 @@ namespace VariableSapper.Models.FieldConstructorElements
                 int row = rnd.Next(0, field.NumberOfRows);
                 int column = rnd.Next(field.NumberOfColumns);
 
-                if (field.Cells[row * column + column].IsMine) return false;
+                if (field.Cells[row * field.NumberOfColumns + column].IsMine) return false;
 
-                field.Cells[row * column + column].SetAsMine();
+                field.Cells[row * field.NumberOfColumns + column].SetAsMine();
 
                 //if (field.Rows[row].Cells[column].IsMine) return false;
 

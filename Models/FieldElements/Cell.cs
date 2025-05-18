@@ -21,7 +21,6 @@ namespace VariableSapper.Models.FieldElements
         public void SetAsMine()
         {
             IsMine = true;
-            IconName = "Mine";
         }
             
 

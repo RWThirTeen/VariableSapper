@@ -48,6 +48,10 @@
             <StackPanel DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
+                <Button Command="{Binding OpenAllCellsCommand}">
+                    <md:PackIcon Kind="BellOutline"
+                 Width="25" Height="25"/>
+                </Button>
                 <Button Command="{Binding RestartGameCommand}">
                     <md:PackIcon Kind="Restart"
                                  Width="25" Height="25"/>
@@ -77,8 +81,8 @@
                 <DataTemplate>
                     <Button Width="30" Height="30"
                             Padding="0" Margin="0" 
-                            MouseRightButtonUp="Button_MouseRightButtonUp"
-                            MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                            MouseLeftButtonUp="Button_MouseRightButtonUp"
+                            MouseRightButtonUp="Button_MouseLeftButtonUp"
                             VerticalAlignment="Center" HorizontalAlignment="Center"
                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                             BorderThickness="0">

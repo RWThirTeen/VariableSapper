@@ -27,14 +27,7 @@
     </Window.Resources>
 
     <Grid>
-        <!--<Canvas>
-            <ContentPresenter Content="{Binding CurrentView}"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-
-            </ContentPresenter>
-        </Canvas>-->
-
+        
         <ContentControl Content="{Binding CurrentViewModel}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"

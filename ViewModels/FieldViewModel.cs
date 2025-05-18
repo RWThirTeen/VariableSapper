@@ -40,6 +40,8 @@ namespace VariableSapper.ViewModels
                     }
                 }
 
+                _mineField = null;
+
                 Set(ref _mineField, value);
 
                 int calculatedwidth = MineField.NumberOfColumns * 30 + 20;
@@ -57,7 +59,8 @@ namespace VariableSapper.ViewModels
                 {
                     cell.PropertyChanged += OnCellChanged;
                 }
-                
+
+                OnPropertyChanged("Field");
             }
         }
 
@@ -178,13 +181,18 @@ namespace VariableSapper.ViewModels
         void OnRestartGameCommandExecuted(object p)
         {
             IFieldConstructor constructor = new FieldConstructor();
-            MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount); 
+            MineField field = constructor.CreateField(MineField.NumberOfRows, MineField.NumberOfColumns, MineField.StartMinesCount);
 
-            // нужно ли обновление вида?
+            MineField = field;
+
+            foreach (Cell c in Field) ;
+
+            //обновление вида
         }
         bool CanRestartGameCommandExecute(object p) => true;
 
         #endregion
+
 
         #region Логика нажатия на ячйеки
 
@@ -194,9 +202,11 @@ namespace VariableSapper.ViewModels
             Button button = (Button)p;
             Cell cell = button.DataContext as Cell;
 
+            if (cell.IsFlaged || cell.IsOpen) return;
+
+            if (cell.IsMine) Debug.WriteLine("it is Mine"); // логика проигрыша
+
             cell.SetAsOpen();
-
-
         }
         bool CanOpenCellCommandExecute(object p) => true;
 
@@ -221,6 +231,25 @@ namespace VariableSapper.ViewModels
 
 
 
+
+
+
+
+
+
+        public ICommand OpenAllCellsCommand { get; }
+        void OnOpenAllCellsCommandExecuted(object p)
+        {
+            foreach (Cell c in Field)
+            {
+                c.SetAsOpen();
+            }
+        }
+        bool CanOpenAllCellsCommandExecute(object p) => true;
+
+
+        
+
         public FieldViewModel(MainWindowViewModel mainWindowViewModel)
         {
             _mainWindow = mainWindowViewModel;
@@ -231,6 +260,7 @@ namespace VariableSapper.ViewModels
 
             OpenCellCommand = new LambdaCommand(OnOpenCellCommandExecuted, CanOpenCellCommandExecute);
             SetFlagCommand = new LambdaCommand(OnSetFlagCommandExecuted, CanSetFlagCommandExecute);
+            OpenAllCellsCommand = new LambdaCommand(OnOpenAllCellsCommandExecuted, CanOpenAllCellsCommandExecute);
         }
     }
 }
