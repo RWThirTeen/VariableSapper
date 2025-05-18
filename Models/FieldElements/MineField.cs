@@ -7,11 +7,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VariableSapper.Infrastructure.Commands;
+using VariableSapper.ViewModels;
 
 namespace VariableSapper.Models.FieldElements
 {
     internal class MineField
     {
+        public FieldViewModel VM { get; private set; }
+
+        public void SetVM(FieldViewModel vm) => VM = vm;
+
         public int NumberOfRows {  get; private set; }
         public int NumberOfColumns { get; private set; }
 
@@ -26,17 +31,13 @@ namespace VariableSapper.Models.FieldElements
         int _minesCount;
         public int MinesCount
         {
-            get
-            {
-                if (_minesCount <= 0) return 0;
-                else return _minesCount;
-            }
+            get => _minesCount;
             private set => _minesCount = value;
         }
 
+        public ObservableCollection<Cell> Cells { get; private set; }
 
 
-        public ObservableCollection<Row> Rows { get; private set; }
 
         #region Логика работы со счетчиком мин
 
@@ -65,11 +66,14 @@ namespace VariableSapper.Models.FieldElements
             StartMinesCount = minesCount;
             MinesCount = minesCount;
 
-            Rows = new ObservableCollection<Row>();
+            Cells = new ObservableCollection<Cell>();
 
-            for (int i = 0; i < NumberOfRows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                Rows.Add(new Row(i, NumberOfColumns, this));
+                for (int j = 0; j < columns; j++)
+                {
+                    Cells.Add(new Cell(i, j, this));
+                }
             }
         }
     }

@@ -39,9 +39,13 @@ namespace VariableSapper.Models.FieldConstructorElements
                 int row = rnd.Next(0, field.NumberOfRows);
                 int column = rnd.Next(field.NumberOfColumns);
 
-                if (field.Rows[row].Cells[column].IsMine) return false;
+                if (field.Cells[row * column + column].IsMine) return false;
 
-                field.Rows[row].Cells[column].SetAsMine();
+                field.Cells[row * column + column].SetAsMine();
+
+                //if (field.Rows[row].Cells[column].IsMine) return false;
+
+                //field.Rows[row].Cells[column].SetAsMine();
 
                 return true;
 

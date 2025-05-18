@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,5 +40,6 @@ namespace VariableSapper.Views
         {
             vm.SetFlagCommand.Execute(sender);
         }
+
     }
 }

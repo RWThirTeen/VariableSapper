@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:fe="clr-namespace:VariableSapper.Models.FieldElements"
              xmlns:local="clr-namespace:VariableSapper.Views"
              mc:Ignorable="d" 
              Height="{Binding UserControlHeight}" Width="{Binding UserControlWidth}">
+
     <Grid>
         <Grid.ColumnDefinitions>
             
@@ -61,7 +63,7 @@
             </StackPanel>
         </DockPanel>
 
-        <ItemsControl ItemsSource="{Binding MineField.Rows}"
+        <ItemsControl ItemsSource="{Binding Field}"
                       Grid.Row="1"
                       HorizontalAlignment="Center"
                       HorizontalContentAlignment="Center">
@@ -73,33 +75,19 @@
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding Cells}"
-                                  Margin="0,5">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="{Binding Cells.Count}"
-                                             Height="25" 
-                                             VerticalAlignment="Center"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Button Width="30" Height="30"
-                                        Padding="0" Margin="0" 
-                                        MouseRightButtonUp="Button_MouseRightButtonUp"
-                                        MouseLeftButtonUp="Button_MouseLeftButtonUp"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                        BorderThickness="0">
-                                    <md:PackIcon Kind="{Binding IconName}"
-                                                 Margin="-5" 
-                                                 Height="25" Width="25"/>
-                                </Button>
-                                
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <Button Width="30" Height="30"
+                            Padding="0" Margin="0" 
+                            MouseRightButtonUp="Button_MouseRightButtonUp"
+                            MouseLeftButtonUp="Button_MouseLeftButtonUp"
+                            VerticalAlignment="Center" HorizontalAlignment="Center"
+                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                            BorderThickness="0">
+                        <md:PackIcon x:Name="CellIcon"
+                                     Kind="{Binding IconName}"
+                                     Margin="-5" 
+                                     Height="25" Width="25">
+                        </md:PackIcon>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

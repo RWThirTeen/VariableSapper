@@ -26,7 +26,10 @@ namespace VariableSapper.ViewModels
 
             FieldViewModel VM = _windowVM.CurrentViewModel as FieldViewModel;
             VM.MineField = field;
+            VM.MineField.SetVM(VM);
         }
+
+        
 
         #region StartGameButtons
 

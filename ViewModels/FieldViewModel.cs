@@ -1,5 +1,10 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +19,6 @@ using VariableSapper.Interfacees.FieldConstructor;
 using VariableSapper.Models.FieldConstructorElements;
 using VariableSapper.Models.FieldElements;
 using VariableSapper.ViewModels.Base;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VariableSapper.ViewModels
 {
@@ -28,6 +32,14 @@ namespace VariableSapper.ViewModels
             get => _mineField;
             set
             {
+                if (_mineField != null)
+                {
+                    foreach (Cell old_cell in Field)
+                    {
+                        old_cell.PropertyChanged -= OnCellChanged;
+                    }
+                }
+
                 Set(ref _mineField, value);
 
                 int calculatedwidth = MineField.NumberOfColumns * 30 + 20;
@@ -40,12 +52,33 @@ namespace VariableSapper.ViewModels
                 Watch = new Stopwatch();
                 Watch.Start();
                 StartTimer();
+
+                foreach (Cell cell in Field)
+                {
+                    cell.PropertyChanged += OnCellChanged;
+                }
+                
             }
         }
 
-        public int MineCount => MineField.MinesCount;
+        public int MineCount 
+        { 
+            get
+            {
+                if (MineField.MinesCount <= 0) return 0;
+                else return MineField.MinesCount;
+            } 
+        }
 
-        public string CellIconPath;
+        public ObservableCollection<Cell> Field => MineField.Cells;
+
+        void OnCellChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Cell cell = (Cell)sender;
+            object value = typeof(Cell).GetProperty(e.PropertyName);
+        }
+
+
 
 
         #region UserControlSize
@@ -70,7 +103,6 @@ namespace VariableSapper.ViewModels
         }
 
         #endregion
-
 
 
         #region Timer
@@ -163,6 +195,8 @@ namespace VariableSapper.ViewModels
             Cell cell = button.DataContext as Cell;
 
             cell.SetAsOpen();
+
+
         }
         bool CanOpenCellCommandExecute(object p) => true;
 
@@ -170,6 +204,7 @@ namespace VariableSapper.ViewModels
         void OnSetFlagCommandExecuted(object p)
         {
             Button button = (Button)p;
+
             Cell cell = button.DataContext as Cell;
 
             if (cell.IsOpen) return;
@@ -178,14 +213,11 @@ namespace VariableSapper.ViewModels
 
             cell.ChangeFlagedStatus();
 
-            OnPropertyChanged(nameof(Cell.IconName));
-            
             OnPropertyChanged("MineCount");
         }
         bool CanSetFlagCommandExecute(object p) => true;
 
         #endregion
-
 
 
 
