@@ -231,7 +231,7 @@ namespace VariableSapper.Models.FieldConstructorElements
                             }
                         }
 
-                        //боковые слева и справа
+                        //центральные ячейки
                         else if (i > 0 && i < field.NumberOfRows - 1)
                         {
                             if (j == 0)
@@ -239,6 +239,17 @@ namespace VariableSapper.Models.FieldConstructorElements
                                 field.Cells[(i - 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
                                 field.Cells[(i - 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
                                 field.Cells[(i) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
+                                field.Cells[(i + 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
+                                field.Cells[(i + 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
+                            }
+                            if (j > 0 && j < field.NumberOfColumns - 1)
+                            {
+                                field.Cells[(i - 1) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
+                                field.Cells[(i - 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
+                                field.Cells[(i - 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
+                                field.Cells[(i) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
+                                field.Cells[(i) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
+                                field.Cells[(i + 1) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
                                 field.Cells[(i + 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
                                 field.Cells[(i + 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
                             }
@@ -250,6 +261,7 @@ namespace VariableSapper.Models.FieldConstructorElements
                                 field.Cells[(i + 1) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
                                 field.Cells[(i + 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
                             }
+                            
                         }
 
                         //нижние ячейки
@@ -275,19 +287,6 @@ namespace VariableSapper.Models.FieldConstructorElements
                                 field.Cells[(i - 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
                                 field.Cells[(i) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
                             }
-                        }
-
-                        //центральные ячейки
-                        else
-                        {
-                            field.Cells[(i - 1) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
-                            field.Cells[(i - 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
-                            field.Cells[(i - 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
-                            field.Cells[(i) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
-                            field.Cells[(i) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
-                            field.Cells[(i + 1) * field.NumberOfColumns + j - 1].IncreaseMinesCountAround();
-                            field.Cells[(i + 1) * field.NumberOfColumns + j].IncreaseMinesCountAround();
-                            field.Cells[(i + 1) * field.NumberOfColumns + j + 1].IncreaseMinesCountAround();
                         }
                     }
                 }
