@@ -29,7 +29,7 @@ namespace VariableSapper.ViewModels
             VM.MineField.SetVM(VM);
         }
 
-        
+
 
         #region StartGameButtons
 

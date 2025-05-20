@@ -34,6 +34,8 @@ namespace VariableSapper.Models.FieldElements
         public bool IsOpen { get; private set; }
         public void SetAsOpen()
         {
+            if (IsOpen) return;
+
             if (IsFlaged) return;
 
             if (IsMine) IconName = "Mine";

@@ -32,6 +32,7 @@ namespace VariableSapper.ViewModels
             get => _mineField;
             set
             {
+                //отписка от ячеек
                 if (_mineField != null)
                 {
                     foreach (Cell old_cell in Field)
@@ -44,6 +45,8 @@ namespace VariableSapper.ViewModels
 
                 Set(ref _mineField, value);
 
+
+                //изменение размеров окна
                 int calculatedwidth = MineField.NumberOfColumns * 30 + 20;
                 int calculatedheight = MineField.NumberOfRows * 30 + 20;
 
@@ -51,10 +54,15 @@ namespace VariableSapper.ViewModels
                 UserControlWidth = calculatedwidth;
                 UserControlHeight = calculatedheight;
 
+                //восстановление счетчиков
+                _openedCellsCounter = 0;
+                _safeCellsCount = Field.Count - MineCount;
+
                 Watch = new Stopwatch();
                 Watch.Start();
                 StartTimer();
 
+                //подписка на ячейки
                 foreach (Cell cell in Field)
                 {
                     cell.PropertyChanged += OnCellChanged;
@@ -202,12 +210,11 @@ namespace VariableSapper.ViewModels
             Button button = (Button)p;
             Cell cell = button.DataContext as Cell;
 
-            if (cell.IsFlaged || cell.IsOpen) return;
-
-            if (cell.IsMine) Debug.WriteLine("it is Mine"); // логика проигрыша
-
-            cell.SetAsOpen();
+            OpenCell(cell);
         }
+
+        
+
         bool CanOpenCellCommandExecute(object p) => true;
 
         public ICommand SetFlagCommand { get; }
@@ -230,11 +237,146 @@ namespace VariableSapper.ViewModels
         #endregion
 
 
+        #region Проверка условия победы
+
+
+        int _openedCellsCounter;
+        int _safeCellsCount;
+
+        bool CheckVictoryConditions()
+        {
+            if (_openedCellsCounter == _safeCellsCount) return true;
+
+            return false;
+        }
+
+
+        #endregion
 
 
 
 
 
+        #region Open Cell Methods
+
+        void OpenCell(Cell cell)
+        {
+            if (cell.IsFlaged || cell.IsOpen) return;
+
+            if (cell.IsMine) Debug.WriteLine("it is Mine"); // логика проигрыша
+
+            cell.SetAsOpen();
+
+            if (cell.MinesCountAround == 0) OpenCellsAround(cell);
+            //открытие соседних клеток при попадании в ячейку без цифры
+
+            if (CheckVictoryConditions()) ; //вывод победного окна 
+        }
+
+
+
+        void OpenCellsAround(Cell cell)
+        {
+            //верхний ряд
+            if (cell.Row == 0)
+            {
+                //левая ячейка
+                if (cell.Column == 0)
+                {
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //средние ячейки
+                if (cell.Column > 0 && cell.Column < MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //правая ячейка
+                if (cell.Column == MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                }
+            }
+
+            //средние ряды
+            if (cell.Row > 0 && cell.Row < MineField.NumberOfRows - 1)
+            {
+                //левая ячейка
+                if (cell.Column == 0)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //средние ячейки
+                if (cell.Column > 0 && cell.Column < MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //правая ячейка
+                if (cell.Column == MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row + 1) * MineField.NumberOfColumns + cell.Column]);
+                }
+            }
+
+            //нижний ряд
+            if (cell.Row == MineField.NumberOfRows - 1)
+            {
+                //левая ячейка
+                if (cell.Column == 0)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //средние ячейки
+                if (cell.Column > 0 && cell.Column < MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column + 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column + 1]);
+                }
+
+                //правая ячейка
+                if (cell.Column == MineField.NumberOfColumns - 1)
+                {
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column - 1]);
+                    OpenCell(Field[(cell.Row - 1) * MineField.NumberOfColumns + cell.Column]);
+                    OpenCell(Field[cell.Row * MineField.NumberOfColumns + cell.Column - 1]);
+                }
+            }
+        }
+
+
+        #endregion
 
 
         public ICommand OpenAllCellsCommand { get; }
@@ -247,8 +389,6 @@ namespace VariableSapper.ViewModels
         }
         bool CanOpenAllCellsCommandExecute(object p) => true;
 
-
-        
 
         public FieldViewModel(MainWindowViewModel mainWindowViewModel)
         {
