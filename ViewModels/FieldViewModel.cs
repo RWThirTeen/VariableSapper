@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Shapes;
 using VariableSapper.Infrastructure.Commands;
 using VariableSapper.Interfacees.FieldConstructor;
+using VariableSapper.Models.Enums;
 using VariableSapper.Models.FieldConstructorElements;
 using VariableSapper.Models.FieldElements;
 using VariableSapper.ViewModels.Base;
@@ -59,8 +60,8 @@ namespace VariableSapper.ViewModels
                 _safeCellsCount = Field.Count - MineCount;
 
                 Watch = new Stopwatch();
-                Watch.Start();
-                StartTimer();
+                
+                GameState = GameStatus.GameOn;
 
                 //подписка на ячейки
                 foreach (Cell cell in Field)
@@ -69,6 +70,35 @@ namespace VariableSapper.ViewModels
                 }
 
                 OnPropertyChanged("Field");
+            }
+        }
+
+        GameStatus _gameState;
+        GameStatus GameState
+        {
+            get => _gameState;
+            set
+            {
+                if (value == GameStatus.GameOn)
+                {
+                    GameStatusText = "Ищите мины";
+                    Watch.Start();
+                    StartTimer();
+                }
+
+                if (value == GameStatus.Lose)
+                {
+                    GameStatusText = "Подрыв";
+                    StopTimer();
+                }
+
+                if (value == GameStatus.Win)
+                {
+                    GameStatusText = "Разминировано";
+                    StopTimer();
+                }
+
+                Set(ref _gameState, value);
             }
         }
 
@@ -87,6 +117,13 @@ namespace VariableSapper.ViewModels
         {
             Cell cell = (Cell)sender;
             object value = typeof(Cell).GetProperty(e.PropertyName);
+        }
+
+        string _gameStatusText;
+        public string GameStatusText
+        {
+            get => _gameStatusText;
+            set => Set(ref  _gameStatusText, value);
         }
 
 
@@ -207,6 +244,8 @@ namespace VariableSapper.ViewModels
         public ICommand OpenCellCommand { get; }
         void OnOpenCellCommandExecuted(object p)
         {
+            if (GameState != GameStatus.GameOn) return;
+
             Button button = (Button)p;
             Cell cell = button.DataContext as Cell;
 
@@ -220,6 +259,8 @@ namespace VariableSapper.ViewModels
         public ICommand SetFlagCommand { get; }
         void OnSetFlagCommandExecuted(object p)
         {
+            if (GameState != GameStatus.GameOn) return;
+
             Button button = (Button)p;
 
             Cell cell = button.DataContext as Cell;
@@ -263,14 +304,22 @@ namespace VariableSapper.ViewModels
         {
             if (cell.IsFlaged || cell.IsOpen) return;
 
-            if (cell.IsMine) Debug.WriteLine("it is Mine"); // логика проигрыша
+            if (cell.IsMine)
+            {
+                OpenAllCellsCommand.Execute(cell);
+
+                GameState = GameStatus.Lose;
+
+
+                return;
+            }
 
             cell.SetAsOpen();
+            _openedCellsCounter++;
 
             if (cell.MinesCountAround == 0) OpenCellsAround(cell);
-            //открытие соседних клеток при попадании в ячейку без цифры
 
-            if (CheckVictoryConditions()) ; //вывод победного окна 
+            if (CheckVictoryConditions()) GameState = GameStatus.Win; //вывод победного окна 
         }
 
 

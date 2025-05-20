@@ -71,6 +71,7 @@
     <Compile Include="Interfacees\FieldConstructor\IMinePlacer.cs" />
     <Compile Include="Interfacees\FieldConstructor\INumbersFiller.cs" />
     <Compile Include="Models\Enums\CellState.cs" />
+    <Compile Include="Models\Enums\GameStatus.cs" />
     <Compile Include="Models\Enums\UserMarks.cs" />
     <Compile Include="Models\FieldConstructorElements\FieldConstructor.cs" />
     <Compile Include="Models\FieldConstructorElements\MinePlacer.cs" />
