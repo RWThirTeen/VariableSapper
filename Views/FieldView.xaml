@@ -48,7 +48,7 @@
             <StackPanel DockPanel.Dock="Right"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <TextBlock Text="{Binding GameStatus}"/>
+                <TextBlock Text="{Binding GameStatusText}"/>
 
                 <Button Command="{Binding RestartGameCommand}">
                     <md:PackIcon Kind="Restart"

@@ -42,6 +42,7 @@ namespace VariableSapper.ViewModels
                     }
                 }
 
+                //обновление поля
                 _mineField = null;
 
                 Set(ref _mineField, value);
@@ -79,24 +80,15 @@ namespace VariableSapper.ViewModels
             get => _gameState;
             set
             {
+                GameStatusText = value.ToString();
+
                 if (value == GameStatus.GameOn)
                 {
-                    GameStatusText = "Ищите мины";
+                    
                     Watch.Start();
                     StartTimer();
                 }
-
-                if (value == GameStatus.Lose)
-                {
-                    GameStatusText = "Подрыв";
-                    StopTimer();
-                }
-
-                if (value == GameStatus.Win)
-                {
-                    GameStatusText = "Разминировано";
-                    StopTimer();
-                }
+                else StopTimer();
 
                 Set(ref _gameState, value);
             }
