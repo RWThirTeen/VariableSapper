@@ -79,15 +79,16 @@
                 <DataTemplate>
                     <Button Width="30" Height="30"
                             Padding="0" Margin="0" 
-                            MouseLeftButtonUp="Button_MouseRightButtonUp"
-                            MouseRightButtonUp="Button_MouseLeftButtonUp"
+                            PreviewMouseLeftButtonUp="Button_MouseLeftButtonUp"
+                            MouseRightButtonUp="Button_MouseRightButtonUp"
                             VerticalAlignment="Center" HorizontalAlignment="Center"
                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                             BorderThickness="0">
                         <md:PackIcon x:Name="CellIcon"
                                      Kind="{Binding IconName}"
                                      Margin="-5" 
-                                     Height="25" Width="25">
+                                     Height="25" Width="25"
+                                     IsHitTestVisible="False">
                         </md:PackIcon>
                     </Button>
                 </DataTemplate>

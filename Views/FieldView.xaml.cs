@@ -40,6 +40,5 @@ namespace VariableSapper.Views
         {
             vm.SetFlagCommand.Execute(sender);
         }
-
     }
 }
