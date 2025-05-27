@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="VariableSapper.Views.MainMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VariableSapper.Views"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="500">
+    <Grid>
+        <StackPanel Orientation="Vertical"
+                    Margin="30,30,30,30"
+                    Width="340">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignOutlinedButton}">
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="Height" Value="40"/>
+                    <Setter Property="Width" Value="330"/>
+                </Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignButtonTextBlock}">
+                    <Setter Property="Foreground" Value="Green"/>
+                </Style>
+                <Style TargetType="Slider" BasedOn="{StaticResource MaterialDesignDiscreteHorizontalSlider}">
+                    <Setter Property="Width" Value="330"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <Button Command="{Binding StartEasyGameCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Легкое поле"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Размер 10*10, 10 мин"
+                                   FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding StartMediumGameCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Среднее поле"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Размер 16*16, 40 мин"
+                                   FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button Command="{Binding StartHardGameCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Тяжёлое поле"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Размер 16*30, 100 мин"
+                                   FontSize="9"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Separator Margin="0,12"
+                       Style="{StaticResource MaterialDesignDarkSeparator}"/>
+
+            <Button Command="{Binding StartCustomGameCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Настраиваемое поле"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <DockPanel Margin="5">
+                <TextBlock Text="Рядов"
+                           DockPanel.Dock="Left"/>
+                <TextBlock Text="{Binding CustomRows}"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right"/>
+            </DockPanel>
+            <Slider IsSelectionRangeEnabled="True"
+                    Minimum="10" Maximum="{Binding MaximumCustomRows}"
+                    TickFrequency="{Binding RowsTick}"
+                    TickPlacement="BottomRight"
+                    Value="{Binding CustomRows}">
+            </Slider>
+
+            <DockPanel Margin="5">
+                <TextBlock Text="Колонок"
+                           DockPanel.Dock="Left"/>
+                <TextBlock Text="{Binding CustomColumns}"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right"/>
+            </DockPanel>
+            <Slider IsSelectionRangeEnabled="True"
+                    Minimum="10" Maximum="{Binding MaximumCustomCollumns}"
+                    TickFrequency="{Binding ColumnsTick}"
+                    TickPlacement="TopLeft"
+                    Value="{Binding CustomColumns}"/>
+
+            <DockPanel Margin="5">
+                <TextBlock Text="Количество мин"
+                           DockPanel.Dock="Left"/>
+                <TextBlock Text="{Binding CustomMinesCount}"
+                           DockPanel.Dock="Right"
+                           HorizontalAlignment="Right"/>
+            </DockPanel>
+            <Slider IsSelectionRangeEnabled="True"
+                    Minimum="10" Maximum="{Binding MaximumCustomMinesCount}"
+                    SelectionStart="{Binding MinimumCustomRecomendedMinesCount}" SelectionEnd="{Binding MaximumCustomRecomendedMinesCount}"
+                    TickFrequency="{Binding MinesCountTick}"
+                    TickPlacement="TopLeft"
+                    Value="{Binding CustomMinesCount}"/>
+
+            <Separator Margin="0,12"
+                       Style="{StaticResource MaterialDesignDarkSeparator}"/>
+            <Button Content="Выход"
+                    Command="{Binding ExitApplicationCommand}" Cursor="Hand"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
